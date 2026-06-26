@@ -12,6 +12,7 @@ import org.yearup.models.User;
 import org.yearup.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -28,6 +29,17 @@ public class OrdersController
     {
         this.orderService = orderService;
         this.userService = userService;
+    }
+    @GetMapping
+    public ResponseEntity<List<Order>> getMyOrders(Principal principal)
+    {
+        String username = principal.getName();
+
+        User user = userService.getByUserName(username);
+
+        List<Order> orders = orderService.getOrdersByUserId(user.getId());
+
+        return ResponseEntity.ok(orders);
     }
 
     @PostMapping

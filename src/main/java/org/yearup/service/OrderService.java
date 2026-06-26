@@ -12,6 +12,7 @@ import org.yearup.repository.OrderRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -75,5 +76,9 @@ public class OrderService
         shoppingCartService.clearCart(userId);
 
         return order;
+    }
+    public List<Order> getOrdersByUserId(int userId)
+    {
+        return orderRepository.findByUserIdOrderByDateDesc(userId);
     }
 }
